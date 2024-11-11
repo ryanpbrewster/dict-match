@@ -1,7 +1,7 @@
 use std::collections::BTreeMap;
 
 use criterion::{black_box, criterion_group, criterion_main, Criterion};
-use rule_match::{bag, LinearScan, LowCardinalityTree, Matcher, Rule};
+use dict_match::{bag, LinearScan, LowCardinalityTree, Matcher, Rule};
 
 fn make_rules() -> Vec<Rule> {
     itertools::iproduct!(0..10, 0..10, 0..10)
@@ -25,7 +25,7 @@ fn make_rules() -> Vec<Rule> {
 fn linear_scan(c: &mut Criterion) {
     let m = LinearScan::new(make_rules());
 
-    c.bench_function("no_match", |b| {
+    c.bench_function("linear_no_match", |b| {
         let input = bag! { "a" => "garbage", "b" => "garbage", "c" => "garbage" };
         b.iter(|| m.find(black_box(&input)))
     });
@@ -34,7 +34,7 @@ fn linear_scan(c: &mut Criterion) {
 fn low_cardinality_tree(c: &mut Criterion) {
     let m = LowCardinalityTree::new(make_rules());
 
-    c.bench_function("no_match", |b| {
+    c.bench_function("tree_no_match", |b| {
         let input = bag! { "a" => "garbage", "b" => "garbage", "c" => "garbage" };
         b.iter(|| m.find(black_box(&input)))
     });
