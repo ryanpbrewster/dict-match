@@ -1,0 +1,14 @@
+[package]
+name = "rule-match"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+
+[dev-dependencies]
+itertools = "0.13.0"
+criterion = "0.5.1"
+
+[[bench]]
+name = "my_benchmark"
+harness = false
